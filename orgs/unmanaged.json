@@ -1,24 +1,33 @@
 {
-  "orgName": "OBF-SI-Demo - Unmanaged Org",
+  "orgName": "PMM-SI-Demo - Unmanaged Org",
   "edition": "Developer",
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
-    },
-    "chatterSettings": {
+  },
+  "chatterSettings": {
       "enableChatter": true
-    },
-    "userManagementSettings": {
+  },
+  "languageSettings": {
+      "enableTranslationWorkbench": true
+  },
+  "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+  },
+  "enhancedNotesSettings": {
+      "enableEnhancedNotes": true
+  },
+  "pathAssistantSettings": {
+      "pathAssistantEnabled": true
+  },
+  "userManagementSettings": {
       "enableNewProfileUI": true
-    },
-    "securitySettings": {
+  },
+  "securitySettings": {
       "enableAdminLoginAsAnyUser": true,
       "sessionSettings": {
-        "forceRelogin": false
+          "forceRelogin": false
       }
-    },
-    "languageSettings": {
-      "enableTranslationWorkbench": true
-    }
+  }
   }
 }
