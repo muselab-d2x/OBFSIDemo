@@ -1,21 +1,69 @@
 minimum_cumulusci_version: '3.76.0'
 project:
-    name: OBFSIDemo
+    name: PMM-SI-Demo
     package:
-        name: OBF-SI-Demo
+        name: PMM SI Demo
         namespace: d2x
         api_version: '58.0'
     git:
         default_branch: 'main'
     source_format: sfdx
     dependencies:
-        - github: "https://github.com/SalesforceFoundation/OutboundFundsModule"
-      
+        - github: "https://github.com/SalesforceFoundation/PMM"
+
+sources:
+    pmm:
+        github: "https://github.com/SalesforceFoundation/PMM"   
 
 tasks:
     run_tests:
         options:
             required_org_code_coverage_percent: 75
+
+
+flows:
+    config_pmm:
+        steps:
+            1:
+                task: pmm:deploy_customer_profiles
+            2:
+                task: set_duplicate_rule_status
+                options:
+                    active: False
+                    api_names: 
+                        - Account.Standard_Account_Duplicate_Rule
+            3:
+                task: pmm:load_dataset
+                options:
+                    sql_path: datasets/sample.sql
+                    mapping: datasets/mapping.yml
+                    drop_missing_schema: True
+            4:
+                task: set_duplicate_rule_status
+                options:
+                    active: True
+                    api_names: 
+                        - Account.Standard_Account_Duplicate_Rule
+            5:
+                flow: pmm:create_users_and_assign_permission_sets
+
+    config_apextest:
+        steps:
+            3:
+                flow: config_pmm
+    config_dev:
+        steps:
+            3:
+                flow: config_pmm
+    config_managed:
+        steps:
+            3:
+                flow: config_pmm
+    config_qa:
+        steps:
+            3:
+                flow: config_pmm
+
 
 orgs:
     scratch:
